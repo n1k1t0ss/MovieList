@@ -1,5 +1,6 @@
 # MovieList
-Sample project that shows movies basic on public API
+Sample project that shows movies basic on public API.
+Application is automatically deploys by Azure static web app, listening master brunch, and located on https://red-tree-01aa01103.azurestaticapps.net
 
 ## Objective
 Create a movie listing app using Vue.js. The app must retrieve a list of movies from the mock
