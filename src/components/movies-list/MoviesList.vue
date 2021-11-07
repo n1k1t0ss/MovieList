@@ -1,14 +1,7 @@
 <template>
   <div>page {{ movies.page }} from {{ movies.total_pages }}</div>
 
-  <div v-for="movie in movies.data" :key="movie.imdbID">
-    {{ movie.Title }}
-    {{ movie.Year }}
-    <a :href="`https://www.imdb.com/title/${movie.imdbID}`">{{ movie.imdbID }}</a>
-    <button @click="() => this.$emit('setFavourite', movie)">
-      {{ movie.isFavourite ? 'Remove from Fav' : 'Add to Fav' }}
-    </button>
-  </div>
+  <Movies :movies="movies.data" @setFavourite="(movie) => this.$emit('setFavourite', movie)" />
 
   <div>
     <button @click="goBackPage">Back</button>
@@ -19,9 +12,10 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { IMovieList } from '@/types/movie';
+import Movies from '@/components/movies-list/Movies.vue';
 
 export default defineComponent({
-  components: {},
+  components: { Movies },
   emits: ['loadPage', 'setFavourite'],
   props: {
     movies: {

@@ -1,9 +1,8 @@
 <template>
   <div>
+    <h1>All Movies</h1>
     <input type="text" v-model="searchText" @keypress.enter="search" @blur="search" />
     <MoviesList :movies="movies" @loadPage="loadPage" @setFavourite="setFavourite" />
-    <div>Favourites</div>
-    <!-- <MoviesList /> -->
   </div>
 </template>
 
@@ -22,9 +21,9 @@ export default defineComponent({
     const { favourites, setFavourite } = useFavourites();
     const { movies, onFavouriteClick, searchText, loadPage, search, currentPage } = useMovies(favourites);
 
-    const _setFavourite = (moive: IMovie) => {
-      onFavouriteClick(moive.imdbID);
-      setFavourite(moive);
+    const _setFavourite = (movie: IMovie) => {
+      onFavouriteClick(movie.imdbID);
+      setFavourite(movie);
     };
 
     return {
@@ -36,10 +35,5 @@ export default defineComponent({
       setFavourite: _setFavourite,
     };
   },
-  data() {
-    return {};
-  },
-
-  methods: {},
 });
 </script>

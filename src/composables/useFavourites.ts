@@ -3,11 +3,11 @@ import { IMovie } from '@/types/movie';
 
 export default function useUserRepositories() {
     const favourites = ref<IMovie[]>([]);
+    const storageKey = "myFavourites";
 
     const getFavourites = () => {
-        const loadedFavourites = localStorage.getItem('myFavourites');
+        const loadedFavourites = localStorage.getItem(storageKey);
         if (loadedFavourites != null) {
-            console.log('test:', favourites, JSON.parse(loadedFavourites));
             favourites.value = JSON.parse(loadedFavourites) as IMovie[];
         }
     };
@@ -17,11 +17,11 @@ export default function useUserRepositories() {
     const setFavourite = (movie: IMovie) => {
         const favouriteIndex = favourites.value.findIndex((f) => f.imdbID == movie.imdbID);
         if (favouriteIndex < 0) {
-            favourites.value.push(movie);
+            favourites.value.push({ ...movie, isFavourite: true });
         } else {
             favourites.value.splice(favouriteIndex, 1);
         }
-        localStorage.setItem('myFavourites', JSON.stringify(favourites.value));
+        localStorage.setItem(storageKey, JSON.stringify(favourites.value));
     };
 
     return {
