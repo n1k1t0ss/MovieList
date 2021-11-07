@@ -1,20 +1,19 @@
 <template>
-  <div>
-    <h1>Favourites</h1>
+  <BasePage>
     <Movies :movies="favourites" @setFavourite="setFavourite" />
-  </div>
+  </BasePage>
 </template>
 
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import useFavourites from '@/composables/useFavourites';
-import { IMovie, IMovieList } from '@/types/movie';
+import BasePage from '@/components/layout/base-page.vue';
 import Movies from '@/components/movies-list/Movies.vue';
 
 export default defineComponent({
   name: 'Home',
-  components: { Movies },
+  components: { BasePage, Movies },
   setup() {
     const { favourites, setFavourite } = useFavourites();
 

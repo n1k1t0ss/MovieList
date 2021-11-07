@@ -1,11 +1,20 @@
 <template>
-  <div v-for="movie in movies" :key="movie.imdbID">
-    {{ movie.Title }}
-    {{ movie.Year }}
-    <a :href="`https://www.imdb.com/title/${movie.imdbID}`">{{ movie.imdbID }}</a>
-    <button @click="() => this.$emit('setFavourite', movie)">
-      {{ movie.isFavourite ? 'Remove from Fav' : 'Add to Fav' }}
-    </button>
+  <div class="movies-contaner">
+    <div class="movie-contaner" v-for="movie in movies" :key="movie.imdbID">
+      <div class="movie-header" :title="movie.Title">
+        <it-icon
+          class="button-star"
+          name="star"
+          :color="movie.isFavourite ? '#f0ba0a' : '#cfcfcf'"
+          @click="() => this.$emit('setFavourite', movie)"
+        />
+        <div class="movie-title">{{ movie.Title }}</div>
+        <div class="movie-year">{{ movie.Year }}</div>
+      </div>
+      <div class="movie-body">
+        imdb ID: <a :href="`https://www.imdb.com/title/${movie.imdbID}`">{{ movie.imdbID }}</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,3 +35,52 @@ export default defineComponent({
 });
 </script>
 
+<style lang="scss">
+.movies-contaner {
+  display: flex;
+  flex-wrap: wrap;
+
+  .movie-contaner {
+    background: #dacbf540;
+    border-radius: 12px;
+    padding: 5px;
+    margin: 5px 10px;
+    width: 45%;
+    width: 45%;
+    flex-grow: 1;
+  }
+
+  .movie-header {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+
+    .movie-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px;
+      color: #32348c;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .movie-year {
+      color: #6c6a6a;
+      font-size: 18px;
+    }
+
+    .button-star {
+      display: inline;
+      cursor: pointer;
+
+      &.it-btn {
+        padding: 8px;
+      }
+    }
+  }
+  .movie-body {
+    margin: 5px 35px;
+    font-size: 16px;
+  }
+}
+</style>

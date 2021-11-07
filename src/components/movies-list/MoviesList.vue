@@ -1,11 +1,16 @@
 <template>
-  <div>page {{ movies.page }} from {{ movies.total_pages }}</div>
-
   <Movies :movies="movies.data" @setFavourite="(movie) => this.$emit('setFavourite', movie)" />
 
-  <div>
-    <button @click="goBackPage">Back</button>
-    <button @click="goNextPage">Next</button>
+  <div class="pagination-buttons">
+    <it-button
+      v-for="pageId in paginationArray"
+      :key="pageId"
+      class="pagination-button"
+      type="primary"
+      :outlined="pageId !== movies.page"
+      @click="gotoPage(pageId)"
+      >{{ pageId }}
+    </it-button>
   </div>
 </template>
 
@@ -24,15 +29,25 @@ export default defineComponent({
     },
   },
 
-  methods: {
-    async goBackPage() {
-      if (this.movies.page > 1) {
-        this.$emit('loadPage', this.movies.page - 1);
+  computed: {
+    paginationArray(): number[] {
+      const min = this.movies.page - 3 > 1 ? this.movies.page - 3 : 1;
+      let max = this.movies.page + 3 < this.movies.total_pages ? this.movies.page + 3 : this.movies.total_pages - 1;
+
+      if (max < min) {
+        return [1];
       }
+
+      max = max < min ? min : max;
+      const arr = [...Array(max - min).keys()];
+      return [1, ...arr.map((i) => min + i + 1), this.movies.total_pages];
     },
-    async goNextPage() {
-      if (this.movies.page < this.movies.total_pages) {
-        this.$emit('loadPage', this.movies.page + 1);
+  },
+
+  methods: {
+    async gotoPage(page: number) {
+      if (page >= 1 && page <= this.movies.total_pages) {
+        this.$emit('loadPage', page);
       }
     },
   },
@@ -40,4 +55,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.pagination-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 10px;
+  flex-wrap: wrap;
+  .pagination-button {
+    display: inline;
+  }
+}
 </style>
