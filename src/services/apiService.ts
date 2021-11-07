@@ -15,13 +15,9 @@ export default class ApiService {
         });
     }
 
-    async getMovies(page = 1): Promise<IMovieList> {
-        const response = await this.apiClient.get(`movies/search/?page=${page}`);
-        return response.data;
-    }
-
-    async findMovie(title: string, page = 1): Promise<IMovieList> {
-        const response = await this.apiClient.get(`movies/search/?title=${title}&page=${page}`);
+    async getMovies(page = 1, title = ""): Promise<IMovieList> {
+        const titleQuery = title !== '' ? `&Title=${title}` : '';
+        const response = await this.apiClient.get(`movies/search/?page=${page}${titleQuery}`);
         return response.data;
     }
 
