@@ -2,8 +2,12 @@
   <div>page {{ movies.page }} from {{ movies.total_pages }}</div>
 
   <div v-for="movie in movies.data" :key="movie.imdbID">
-    <MovieItem :Title="movie.Title" :Year="movie.Year" :imdbID="movie.imdbID" />
-    <button @click="() => onFav(movie)">Add to Fav</button>
+    {{ movie.Title }}
+    {{ movie.Year }}
+    <a :href="`https://www.imdb.com/title/${movie.imdbID}`">{{ movie.imdbID }}</a>
+    <button @click="() => this.$emit('setFavourite', movie)">
+      {{ movie.isFavourite ? 'Remove from Fav' : 'Add to Fav' }}
+    </button>
   </div>
 
   <div>
@@ -13,32 +17,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import MovieItem from "@/components/movies-list/MovieItem.vue";
+import { defineComponent, PropType } from 'vue';
+import { IMovieList } from '@/types/movie';
 
 export default defineComponent({
-  components: { MovieItem },
-  emits: ["loadPage", "onFavourites"],
+  components: {},
+  emits: ['loadPage', 'setFavourite'],
   props: {
     movies: {
       required: true,
-      type: Object,
+      type: Object as PropType<IMovieList>,
     },
   },
 
   methods: {
     async goBackPage() {
       if (this.movies.page > 1) {
-        this.$emit("loadPage", this.movies.page - 1);
+        this.$emit('loadPage', this.movies.page - 1);
       }
     },
     async goNextPage() {
       if (this.movies.page < this.movies.total_pages) {
-        this.$emit("loadPage", this.movies.page + 1);
+        this.$emit('loadPage', this.movies.page + 1);
       }
-    },
-    onFav(movie: any) {
-      this.$emit("onFavourites", movie);
     },
   },
 });
