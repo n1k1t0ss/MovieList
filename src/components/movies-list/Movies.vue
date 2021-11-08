@@ -5,8 +5,8 @@
       <div class="movie-header" :title="movie.Title">
         <it-icon
           class="button-star"
+          :class="movie.isFavourite ? '--active' : ''"
           name="star"
-          :color="movie.isFavourite ? '#f0ba0a' : '#cfcfcf'"
           @click="() => this.$emit('setFavourite', movie)"
         />
         <div class="movie-title">{{ movie.Title }}</div>
@@ -43,6 +43,7 @@ export default defineComponent({
   margin: 0 -10px;
 
   .no-movies {
+    margin: 0 10px;
   }
 
   .movie-contaner {
@@ -77,9 +78,14 @@ export default defineComponent({
     .button-star {
       display: inline;
       cursor: pointer;
+      color: #cfcfcf;
 
       &.it-btn {
         padding: 8px;
+      }
+
+      &.--active {
+        color: #f0ba0a;
       }
     }
   }

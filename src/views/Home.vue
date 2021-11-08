@@ -1,7 +1,14 @@
 <template>
   <BasePage>
     <div class="search-container">
-      <it-input v-model="searchText" @keypress.enter="search" @blur="search" prefix="Search" prefix-icon="search" />
+      <it-input
+        v-model="searchText"
+        class="search-input"
+        @keypress.enter="search"
+        @blur="search"
+        prefix="Search"
+        prefix-icon="search"
+      />
     </div>
     <MoviesPagination :movies="movies" @loadPage="loadPage" @setFavourite="setFavourite" />
   </BasePage>
