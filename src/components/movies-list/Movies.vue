@@ -1,6 +1,6 @@
 <template>
   <div class="movies-contaner">
-    <div v-if="movies.length === 0" class="no-movies">No Data</div>
+    <div v-if="movies.length === 0" class="no-movies">It looks like you don't have any items yet..</div>
     <div class="movie-contaner" v-for="movie in movies" :key="movie.imdbID">
       <div class="movie-header" :title="movie.Title">
         <it-icon
