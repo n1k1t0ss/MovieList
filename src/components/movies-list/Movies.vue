@@ -1,5 +1,6 @@
 <template>
   <div class="movies-contaner">
+    <div v-if="movies.length === 0" class="no-movies">No Data</div>
     <div class="movie-contaner" v-for="movie in movies" :key="movie.imdbID">
       <div class="movie-header" :title="movie.Title">
         <it-icon
@@ -39,6 +40,10 @@ export default defineComponent({
 .movies-contaner {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 -10px;
+
+  .no-movies {
+  }
 
   .movie-contaner {
     background: #dacbf540;

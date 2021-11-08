@@ -1,9 +1,9 @@
 import { ref, onMounted } from 'vue'
 import { IMovie } from '@/types/movie';
 
-export default function useUserRepositories() {
+export default function useFavourites() {
     const favourites = ref<IMovie[]>([]);
-    const storageKey = "myFavourites";
+    const storageKey = "favourite-movies";
 
     const getFavourites = () => {
         const loadedFavourites = localStorage.getItem(storageKey);

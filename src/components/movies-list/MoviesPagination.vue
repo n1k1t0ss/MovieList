@@ -31,7 +31,7 @@ export default defineComponent({
 
   computed: {
     paginationArray(): number[] {
-      const min = this.movies.page - 3 > 1 ? this.movies.page - 3 : 1;
+      const min = this.movies.page - 4 > 1 ? this.movies.page - 4 : 1;
       let max = this.movies.page + 3 < this.movies.total_pages ? this.movies.page + 3 : this.movies.total_pages - 1;
 
       if (max < min) {
@@ -39,8 +39,8 @@ export default defineComponent({
       }
 
       max = max < min ? min : max;
-      const arr = [...Array(max - min).keys()];
-      return [1, ...arr.map((i) => min + i + 1), this.movies.total_pages];
+      const arr = Array.from(Array(max - min), (_, i) => min + i + 1);
+      return [1, ...arr, this.movies.total_pages];
     },
   },
 

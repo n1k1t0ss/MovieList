@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { IMovieList } from "@/types/movie";
 
-export default class ApiService {
+export default class MoviesApi {
     private apiClient: AxiosInstance;
 
     constructor() {

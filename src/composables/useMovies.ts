@@ -1,16 +1,16 @@
 import { Ref, ref, onMounted } from 'vue'
 import { IMovieList, IMovie } from '@/types/movie';
-import ApiService from '@/services/apiService';
+import MoviesApi from '@/services/moviesApi';
 
-export default function useUserRepositories(favourites: Ref<IMovie[]>) {
+export default function useMovies(favourites: Ref<IMovie[]>) {
 
     const movies = ref<IMovieList>({ page: 0, total_pages: 0, data: [] });
     const currentPage = ref(1);
     const searchText = ref('');
-    const apiService = new ApiService();
+    const moviesApi = new MoviesApi();
 
     const loadMovies = async () => {
-        const loadedMovies = await apiService.getMovies(currentPage.value, searchText.value);
+        const loadedMovies = await moviesApi.getMovies(currentPage.value, searchText.value);
         loadedMovies.data.forEach((movie) => {
             movie.isFavourite = favourites.value.some((f) => f.imdbID == movie.imdbID);
         });

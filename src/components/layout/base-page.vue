@@ -11,8 +11,9 @@
 
 <style lang="scss" scoped>
 .base-page {
+  margin: 0 10px;
   .nav {
-    margin: 20px;
+    margin: 20px 0;
     .nav-link {
       color: #6c6a6a;
       &.router-link-active {
