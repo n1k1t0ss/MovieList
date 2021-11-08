@@ -26,18 +26,24 @@ describe('Show star in tab', () => {
         cy.clearCookies();
         cy.visit('/')
 
-        cy.get(':nth-child(2) > .movie-header > .button-star')
+        cy.get(':nth-child(4) > .movie-header > .button-star')
             .should('exist')
             .should('not.have.class', '--active')
             .click()
-        const header1 = cy.get(':nth-child(2) > .movie-header > .movie-title')
 
-        cy.visit('/favourites')
+        let title1;
+        cy.get(':nth-child(4) > .movie-header > .movie-title')
+            .then(($myElement) => {
+                title1 = $myElement.text();
+            })
+            .then(() => {
+                cy.visit('/favourites');
 
-        cy.contains(':nth-child(1) > .movie-header > .movie-title', 'Waterworld')
-            .click()
-            .should('not.have.class', 'movie-contaner')
+                cy.contains(':nth-child(1) > .movie-header > .movie-title', title1)
+                    .click()
+                    .should('not.have.class', 'movie-contaner');
 
+            })
     })
 
     it('Clicking on star in favourites shoud remove element', () => {
